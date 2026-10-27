@@ -79,6 +79,7 @@ some basic configuration updates.
 | GS316EPP  | 16    | V1.0.4.4                               |                     |
 | JGS516PE  | 16    | V2.6.0.48                              |                     |
 | JGS24Ev2  | 24    | V2.6.0.48                              |                     |
+| MS108EUP  | 8     | V1.0.2.9                               |                     |
 | MS305E    | 5     | v1.0.0.9                               |                     |
 | MS308E    | 8     | v1.0.0.9                               |                     |
 | XS512EM   | 12    | V1.0.2.8                               |                     |
@@ -90,7 +91,6 @@ Supported firmware languages: GR (German), EN (English)
 | Model    | Support status                                                  |
 | -------- | --------------------------------------------------------------- |
 | JGS524PE | See [#93](https://github.com/ckarrie/ha-netgear-plus/issues/93) |
-| MS108EUP | See [#91](https://github.com/ckarrie/ha-netgear-plus/issues/91) |
 
 Do you have a NETGEAR Plus switch model that is currently not supported, open a [GitHub issue](https://github.com/ckarrie/ha-netgear-plus/issues/new?template=feature_request.yml). The actual API to the switch is implemented in the [py-netgear-plus](https://github.com/foxey/py-netgear-plus) library. Are you willing to contribute, please read the [instruction on adding your model](https://github.com/foxey/py-netgear-plus/blob/main/HOWTO_Add_New_Models.md) to this library and create a pull request for [py-netgear-plus](https://github.com/foxey/py-netgear-plus) first.
 

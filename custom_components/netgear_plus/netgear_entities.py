@@ -258,6 +258,7 @@ unique_id={self._unique_id} port_nr={self.port_nr}>"
                 self.hub.api.turn_on_poe_port, self.port_nr
             )
             self._value = "on" if successful else "off"
+            self.async_write_ha_state()
             _LOGGER.info(
                 "called turn_on_poe_port for uid=%s port=%s: successful=%s",
                 self._unique_id,
@@ -272,6 +273,7 @@ unique_id={self._unique_id} port_nr={self.port_nr}>"
                 self.hub.api.turn_off_poe_port, self.port_nr
             )
             self._value = "off" if successful else "on"
+            self.async_write_ha_state()
             _LOGGER.info(
                 "called turn_off_poe_port for uid=%s port=%s: successful=%s",
                 self._unique_id,
@@ -511,6 +513,7 @@ class NetgearLedSwitchEntity(NetgearAPICoordinatorEntity, SwitchEntity):
         """Enable front panel LEDs."""
         successful = await self.hub.async_call_api(self.hub.api.turn_on_leds)
         self._value = "on" if successful else "off"
+        self.async_write_ha_state()
         _LOGGER.info(
             "called turn_on_leds for uid=%s: successful=%s",
             self._unique_id,
@@ -521,6 +524,7 @@ class NetgearLedSwitchEntity(NetgearAPICoordinatorEntity, SwitchEntity):
         """Disable front panel LEDs."""
         successful = await self.hub.async_call_api(self.hub.api.turn_off_leds)
         self._value = "off" if successful else "on"
+        self.async_write_ha_state()
         _LOGGER.info(
             "called turn_off_leds for uid=%s: successful=%s",
             self._unique_id,

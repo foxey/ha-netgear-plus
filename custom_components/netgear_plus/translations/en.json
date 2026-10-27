@@ -5,7 +5,10 @@
             "switch_not_detected": "Switch model could not be detected during SSDP discovery"
         },
         "error": {
-            "config": "Connection or login error: please check your configuration"
+            "config": "Connection or login error: please check your configuration",
+            "max_sessions": "Maximum number of sessions reached on the switch. Log out of the switch's web interface or restart the switch and try again.",
+            "timeout": "Connection timed out. Please check that the switch is reachable.",
+            "not_implemented_error": "This switch model is not supported."
         },
         "step": {
             "user": {

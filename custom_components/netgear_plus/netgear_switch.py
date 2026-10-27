@@ -19,10 +19,11 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 from py_netgear_plus import LoginFailedError, NetgearSwitchConnector
+from py_netgear_plus import MaxSessionsError as ApiMaxSessionsError
 from py_netgear_plus import __version__ as api_version
 
 from .const import DOMAIN
-from .errors import CannotLoginError
+from .errors import CannotLoginError, MaxSessionsError
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -38,8 +39,13 @@ def get_api(host: str, password: str = "") -> NetgearSwitchConnector:
     )
     # Only login if password is not empty.
     # This allows to call get_unique_id before the user has provided a password
-    if password and not api.get_login_cookie():
-        raise CannotLoginError
+    if password:
+        try:
+            logged_in = api.get_login_cookie()
+        except ApiMaxSessionsError as err:
+            raise MaxSessionsError from err
+        if not logged_in:
+            raise CannotLoginError
     return api
 
 
@@ -93,6 +99,15 @@ class HomeAssistantNetgearSwitch:
         """Get switch information asynchronously."""
         async with self.api_lock:
             return await self.hass.async_add_executor_job(self.api.get_switch_infos)  # type: ignore[attr-defined]
+
+    async def async_logout(self) -> bool:
+        """Logout from the switch to free up the session."""
+        if self.api is None:
+            return False
+        async with self.api_lock:
+            return await self.hass.async_add_executor_job(
+                self.api.delete_login_cookie
+            )
 
     async def async_call_api(self, func: Callable[..., bool], *args: Any) -> bool:
         """Call an API write function under lock."""
